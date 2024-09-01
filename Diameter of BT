@@ -3,6 +3,11 @@ Perform a DFS to calculate the height of the tree for each node.
 Use a global variable to track the maximum diameter found during the traversal.
 The diameter at each node is the sum of the left and right subtree heights, and the maximum value is returned.
 
+TC:O(n)
+SC:O(H)
+if skew tree then O(n)
+if balanced tree O(log(n))
+
 
 class Solution {
     private int maxi = 0; // Global variable to store the maximum diameter
