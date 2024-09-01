@@ -1,0 +1,41 @@
+ApproACH:
+Initialization: Set maxi to Integer.MIN_VALUE to handle all possible path sums.
+
+DFS Calculation: Recursively compute left and right subtree sums, ensuring only positive contributions with Math.max(dfsSum(root.left), 0) and Math.max(dfsSum(root.right), 0).
+
+Update maxi: Update maxi with Math.max(maxi, lSum + rSum + root.val) and return Math.max(lSum, rSum) + root.val for the maximum path sum including the current node.
+
+
+
+class Solution {
+    int maxi=Integer.MIN_VALUE;
+    public int maxPathSum(TreeNode root) {
+        dfsSum(root);
+        return maxi;
+    }
+
+    int dfsSum(TreeNode root) {
+        if(root == null){
+            return 0;
+        }
+        int lSum = dfsSum(root.left);
+       
+        int rSum = dfsSum(root.right);
+
+        if(lSum <=0 && rSum<=0) {
+            maxi = Math.max(maxi, root.val);
+            return root.val;
+        } else if(lSum<=0 && rSum>=0){
+            maxi = Math.max(maxi, rSum+root.val);
+            return rSum+root.val;
+        } else if(rSum<=0 && lSum>=0) {
+            maxi = Math.max(maxi, lSum+root.val);
+            return lSum+root.val;
+        }
+        else {
+             maxi = Math.max(maxi, lSum+rSum+root.val);
+        }
+
+        return Math.max(lSum, rSum) + root.val;
+    }
+}
