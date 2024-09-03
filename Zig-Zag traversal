@@ -1,0 +1,62 @@
+Approach:
+
+Use a queue to perform level-order traversal of the tree.
+Track traversal direction using a boolean flag, toggling it after each level.
+Collect values for each level, reverse if needed, and add to the final result.
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    int level=0;
+
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+         List<List<Integer>> finalRes = new ArrayList<List<Integer>>();
+         if (root == null) {
+            return finalRes;
+        }
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> currentRes = new ArrayList<>();
+            for(int i=0; i<size; i++) {
+                TreeNode current = queue.poll();
+                currentRes.add(current.val);
+
+                if (current.left != null) {
+                  queue.add(current.left);
+                }
+
+                if (current.right != null) {
+                 queue.add(current.right);
+                }
+            }
+            if(level%2==0){
+                finalRes.add(currentRes);
+            //    System.out.println(finalRes);
+            } else {
+                finalRes.add(currentRes.reversed());
+            }
+            level++;
+         //   finalRes.add(currentRes);
+
+        }
+        return finalRes;
+    }
+}
