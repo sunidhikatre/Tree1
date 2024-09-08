@@ -1,0 +1,46 @@
+Recursive Calculation: Traverse the tree recursively and check if the sum of the left and right children equals the node's data for non-leaf nodes.
+Check Leaf Nodes: Return the node’s data if it's a leaf node since no further checks are needed.
+Propagate Failure: If any node violates the sum property, return -1 to signal failure up the recursion stack.
+
+
+ public static int isSumProperty(Node root)
+    {
+        // add your code here
+        if (root == null)
+            return 1;
+            
+        int isSum = isSum(root);
+        if(isSum == -1){
+            return 0;
+        } else{
+            return 1;
+        }
+        
+    }
+    
+    
+    public static int isSum(Node root) {
+        if(root==null) {
+            return 0;
+        }
+        
+        if(root.left==null && root.right==null){
+            return root.data;
+        }
+        
+        int leftSum = isSum(root.left);
+        if (leftSum == -1){
+            return -1;
+        }
+        
+        int rightSum = isSum(root.right);
+        if (rightSum == -1) {
+            return -1;
+        }
+        
+        if(leftSum + rightSum == root.data) {
+            return root.data;
+        } 
+        return -1;
+        
+    }
