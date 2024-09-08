@@ -1,0 +1,47 @@
+Use a breadth-first search (BFS) approach with a queue to traverse the binary tree level by level, where each node is paired with its horizontal distance (level).
+Maintain a TreeMap to store the first node encountered at each horizontal level, ensuring the topmost node is kept for that level.
+After traversal, collect the node values from the TreeMap in sorted order of the horizontal levels to get the top view.
+
+
+
+class Solution {
+    // Function to return a list of nodes visible from the top view
+    // from left to right in Binary Tree.
+    static ArrayList<Integer> topView(Node root) {
+        // add your code
+        ArrayList<Integer> topView = new ArrayList<>();
+        Map<Integer, Node> map = new TreeMap<>();
+        map.put(0, root);
+        Queue<Pair> q = new LinkedList<>();
+        Pair p = new Pair(0,root);
+        q.add(p);
+        
+        if(root==null){
+            return topView;
+        }
+        
+        while(!q.isEmpty()) {
+            p = q.poll();
+            if(p.node.left !=null) {
+                Pair newPair = new Pair(p.level-1, p.node.left);
+                q.add(newPair);
+                if(!map.containsKey(p.level-1)) {
+                    map.put(p.level-1, p.node.left);
+                }
+            }
+            if(p.node.right !=null) {
+                Pair newPair = new Pair(p.level+1, p.node.right);
+                q.add(newPair);
+                if(!map.containsKey(p.level+1)) {
+                    map.put(p.level+1, p.node.right);
+                }
+            }
+        }
+}
+        for (Map.Entry<Integer, Node> entry : map.entrySet()) {
+           topView.add(entry.getValue().data);
+        }
+        
+        return topView;
+        
+    }
