@@ -1,0 +1,43 @@
+
+
+
+class Solution {
+    public int countNodes(TreeNode root) {
+        int count = 0;
+        if(root==null){
+            return 0;
+        }
+
+        int lh = heightLeft(root.left);
+        int rh = heightRight(root.right);
+
+        if(lh == rh) {
+            count = (int)Math.pow(2,lh+1)-1;
+            return count;
+        }
+        
+        return 1 + countNodes(root.left) + countNodes(root.right);
+    }
+
+    int heightLeft(TreeNode root) {
+        int leftCount = 0;
+        
+        while(root!=null) {
+            
+            leftCount++;
+            root=root.left;
+        }
+        return leftCount;
+    }
+
+      int heightRight(TreeNode root) {
+        int rightCount = 0;
+       
+        while(root!=null) {
+            
+            rightCount++;
+            root=root.right;
+        }
+        return rightCount;
+    }
+}
