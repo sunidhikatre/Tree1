@@ -1,0 +1,40 @@
+The first element of the preorder array is always the root of the current subtree.
+Use the inorder array to divide the nodes into left and right subtrees.
+Recursively construct the tree by determining the left and right subtrees and linking them to their respective root nodes.
+
+
+
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+      if(preorder.length !=inorder.length){
+        return null;
+      }
+      int preStart = 0;
+      int inStart = 0;
+      int preEnd = preorder.length-1;
+      int inEnd = inorder.length-1;
+      Map<Integer,Integer> map = new HashMap<>();
+      for(int i=0; i<inorder.length; i++) {
+        map.put(inorder[i], i);
+      }
+
+      TreeNode root = buildUniqueTree(preorder, preStart, preEnd, inorder, inStart, inEnd, map);
+      return root;
+    }
+
+    public TreeNode buildUniqueTree(int[] preOrder, int preStart, 
+    int preEnd, int[] inorder, int inStart, int inEnd, Map map)
+    {
+        if(preStart > preEnd || inStart > inEnd){
+            return null;
+        }
+      
+        TreeNode root = new TreeNode(preOrder[preStart]);
+        int inRoot = (int)map.get(root.val);
+        int numsLeft = inRoot - inStart;
+
+        root.left = buildUniqueTree(preOrder, preStart+1, preStart+numsLeft, inorder, inStart, inRoot-1, map);
+        root.right = buildUniqueTree(preOrder, preStart+numsLeft+1, preEnd, inorder, inRoot+1, inEnd, map); 
+        return root;
+    }
+}
