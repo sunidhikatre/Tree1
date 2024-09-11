@@ -1,0 +1,57 @@
+Serialize: Perform a level-order traversal (BFS) using a queue to process the nodes.
+Append the node's value or "n" (for null nodes) to a StringBuilder with spaces for separation. Return the resulting string.
+
+Deserialize: Split the serialized string into an array of values. Use a queue to rebuild the tree level by level,
+creating new nodes for non-null values and connecting them as left and right children of the current parent node.
+
+
+public class Codec {
+
+    // Encodes a tree to a single string.
+    public String serialize(TreeNode root) {
+        if(root == null) {
+            return "n";
+        }
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        StringBuilder sb = new StringBuilder();
+        while(!q.isEmpty()) {
+            TreeNode current = q.poll();
+            if(current == null) {
+                sb.append("n ");
+                continue;
+            }
+            sb.append(current.val + " ");
+            q.add(current.left);
+            q.add(current.right);
+        }
+        return sb.toString().trim();
+    }
+
+    // Decodes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        
+        if(data=="n"){
+            return null;
+        }
+        String[] values = data.split(" ");
+        TreeNode root = new TreeNode(Integer.parseInt(values[0]));
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+
+        for(int i = 1; i < values.length; i++) {
+            TreeNode parent = q.poll();
+            if(!values[i].equals("n")) {
+                TreeNode left = new TreeNode(Integer.parseInt(values[i]));
+                parent.left = left;
+                q.add(left);
+            }
+             if(!values[++i].equals("n")) {
+                TreeNode right = new TreeNode(Integer.parseInt(values[i]));
+                parent.right = right;
+                q.add(right);
+            }
+        }
+        return root;
+    }
+}
