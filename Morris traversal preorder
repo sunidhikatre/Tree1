@@ -1,0 +1,49 @@
+Initialize an empty list preorder to store the traversal result and start from the root node curr.
+Traverse the tree: If the left child of curr is null, append curr.data to the result and move to the right child.
+If curr has a left child, find its inorder predecessor (rightmost node in the left subtree).
+If the predecessor’s right child is null, create a temporary link back to curr (thread), add curr.data to the result, and move to the left child.
+If the predecessor’s right child points back to curr, remove the thread, and move to the right child.
+
+
+
+class Tree
+{
+    // Return a list containing the Preorder traversal of the given tree
+    ArrayList<Integer> preOrder(Node root)
+    {
+        // Code
+        ArrayList<Integer> preorder = new ArrayList<>();
+        Node curr = null;
+        curr = root;
+      //  Node prev = null;
+        while(curr != null) {
+             if(curr.left == null) {
+                preorder.add(curr.data);
+                curr = curr.right;
+             }
+             else {
+                 Node prev = curr.left;
+                 while(prev.right != null && prev.right != curr) {
+                     prev = prev.right;
+                 }
+                 
+                if(prev.right == null) {
+                    prev.right = curr;
+                    preorder.add(curr.data);
+                    curr = curr.left;
+                } else {
+                    prev.right = null;
+                //    inorder.add(curr.data);
+                    curr = curr.right;
+                }
+             }
+        }
+        return preorder;
+    }
+    
+    
+}
+
+
+TC:O(n)
+SC:O(1)
