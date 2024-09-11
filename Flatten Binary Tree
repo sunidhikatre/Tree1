@@ -1,0 +1,24 @@
+Traverse the tree starting from the root. For each node, if the left child exists, find its rightmost node (inorder predecessor).
+Set the right child of the predecessor to point to the current node's right child, then move the left child to the right and set the left to null.
+Move the current pointer to the right child and repeat the process until the entire tree is flattened.
+
+
+
+
+class Solution {
+    public void flatten(TreeNode root) {
+       TreeNode curr = root;
+       while(curr!=null) {
+        if(curr.left!=null){
+            TreeNode prev = curr.left;
+            while(prev.right != null) {
+                prev = prev.right;
+            }
+            prev.right = curr.right;
+            curr.right = curr.left;
+            curr.left = null;
+        }
+        curr=curr.right;
+       }    
+    }
+}
