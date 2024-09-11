@@ -5,6 +5,9 @@ If the predecessor’s right child is null, create a temporary link back to curr
 If the predecessor’s right child points back to curr, remove the thread, and move to the right child.
 
 
+prev harbaar calculate hoga. ekbaar pata chla kbhi toh prev point krra tha pehlese toh right ko janeka
+
+
 
 class Tree
 {
