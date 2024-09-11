@@ -1,0 +1,48 @@
+The approach for in-order traversal without recursion (Morris Traversal) can be summarized as:
+
+For each node, if the left subtree is not null, find the predecessor (rightmost node in the left subtree).
+If the predecessor’s right pointer is null, make it point to the current node and move left; otherwise, revert changes, add the current node to the result, and move right.
+If no left subtree exists, add the node to the result and move right.
+
+
+
+class Solution
+{
+    // Return a list containing the inorder traversal of the given tree
+    ArrayList<Integer> inOrder(Node root)
+    {
+        // Code
+        ArrayList<Integer> inorder = new ArrayList<>();
+        Node curr = null;
+        curr = root;
+      //  Node prev = null;
+        while(curr != null) {
+             if(curr.left == null) {
+                inorder.add(curr.data);
+                curr = curr.right;
+             }
+             else {
+                 Node prev = curr.left;
+                 while(prev.right!=null && prev.right!=curr){
+                     prev=prev.right;
+                 }
+                 
+                if(prev.right == null) {
+                    prev.right=curr;
+                    curr = curr.left;
+                } else {
+                    prev.right=null;
+                    inorder.add(curr.data);
+                    curr=curr.right;
+                }
+             }
+        }
+        return inorder;
+    }
+    
+    
+}
+
+
+TC:O(n)
+SC:O(1)
