@@ -1,0 +1,19 @@
+Traverse the tree recursively, starting from the root.
+If both p and q are smaller than the current node, move left; if both are larger, move right.
+If they split or match the current node, then that node is the lowest common ancestor (LCA).
+
+
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+       if(root == null || root == p || root == q) {
+        return root;
+       } 
+       if(root.val > p.val && root.val > q.val) {
+         return lowestCommonAncestor(root.left, p, q);
+       }
+       if(root.val < p.val && root.val < q.val) {
+         return lowestCommonAncestor(root.right, p, q);
+       }
+       return root; //jahanpr split hora hai woh lca
+    }
+}
