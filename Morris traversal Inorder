@@ -4,7 +4,8 @@ For each node, if the left subtree is not null, find the predecessor (rightmost 
 If the predecessor’s right pointer is null, make it point to the current node and move left; otherwise, revert changes, add the current node to the result, and move right.
 If no left subtree exists, add the node to the result and move right.
 
-
+Note: Use prev to get the left subtree rightmost node. if that prev ka rigt pointer is null then point to current and move 
+current to left. else prev ka right will be null mean already visited left subtree print current node and move right.
 
 class Solution
 {
