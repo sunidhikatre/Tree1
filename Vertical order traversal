@@ -1,0 +1,59 @@
+Key Components
+Class NodeLevel
+
+Stores each tree node along with its vertical position and level.
+Helps in level-order traversal using a queue.
+Data Structures Used
+
+Queue (queue) → Used for BFS traversal of the tree.
+TreeMap (map) → Stores nodes grouped by their vertical position.
+Nested TreeMap (levelMap) → Groups nodes further by level (top-down).
+PriorityQueue (pq) → Ensures sorting of nodes at the same position.
+Traversal Approach
+
+Start from the root at (vertical = 0, level = 0).
+Use BFS (level-order traversal) with a queue.
+Maintain a TreeMap (map) for vertical sorting.
+Store nodes in PriorityQueue at the same (vertical, level) position for sorted ordering.
+Traverse left child (vertical - 1, level + 1).
+Traverse right child (vertical + 1, level + 1).
+
+
+class NodeLevel {
+    TreeNode node;
+    int vertical;
+    int level;
+ }
+class Solution {
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        List<List<Integer>> verticalTraversal = new ArrayList<>();
+        List<Integer> currentList = new ArrayList<>();
+        int vertical = 0;
+        int level = 0;
+        if(root==null){
+            verticalTraversal.add(currentList);
+            return verticalTraversal;
+        }
+
+        Queue<NodeLevel> queue = new LinkedList<>();
+        q.add(root, vertical, level);
+
+        TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>> map = new HashMap<>();
+
+        while(!q.isEmpty()) {
+            NodeLevel currentNode = q.poll();
+            if(map.containsKey(currentNode.vertical)) {
+               TreeMap levelMap = map.get(currentNode.vertical);
+               
+            } else {
+                map.put(vertical, currentQueue);
+            }
+            if(currentNode.left!=null) {
+                queue.add(root, vertical-1, level+1);
+            }
+            if(currentNode.right != null) {
+                queue.add(root, vertical + 1, level + 1);
+            }
+        }
+    }
+} 
