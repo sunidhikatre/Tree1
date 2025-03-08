@@ -1,9 +1,27 @@
 ApproACH:
-Initialization: Set maxi to Integer.MIN_VALUE to handle all possible path sums.
+In the dfsSum function,
 
-DFS Calculation: Recursively compute left and right subtree sums, ensuring only positive contributions with Math.max(dfsSum(root.left), 0) and Math.max(dfsSum(root.right), 0).
+temp (Temporary Maximum for Upward Path)
 
-Update maxi: Update maxi with Math.max(maxi, lSum + rSum + root.val) and return Math.max(lSum, rSum) + root.val for the maximum path sum including the current node.
+
+int temp = Math.max(root.val, Math.max(lSum, rSum) + root.val);
+This represents the maximum path sum that can be passed upward from the current node to its parent.
+It considers two possibilities:
+Only the node itself → root.val
+Node + one of its child paths (whichever is larger) → Math.max(lSum, rSum) + root.val
+This ensures that we do not take both left and right subtrees when passing values upward, as a parent node can only choose one child.
+ans (Local Maximum Path Sum Considering Both Subtrees)
+
+
+int ans = Math.max(temp, lSum + rSum + root.val);
+This represents the maximum path sum considering the current node as the root of a potential answer.
+It takes the maximum of temp (value being passed upward) and the sum of both children plus the node itself (lSum + rSum + root.val).
+This allows us to track the best possible path sum that includes both left and right subtrees.
+Finally, we update maxi to store the maximum value encountered so far:
+
+
+maxi = Math.max(maxi, ans);
+This ensures that the overall maximum path sum is recorded, even if the path does not include the root of the tree.
 
 
 
@@ -15,27 +33,21 @@ class Solution {
     }
 
     int dfsSum(TreeNode root) {
-        if(root == null){
+        if(root == null) {
             return 0;
         }
-        int lSum = dfsSum(root.left);
-       
+        int lSum = dfsSum(root.left);      
         int rSum = dfsSum(root.right);
 
-        if(lSum <=0 && rSum<=0) {
-            maxi = Math.max(maxi, root.val);
-            return root.val;
-        } else if(lSum<=0 && rSum>=0){
-            maxi = Math.max(maxi, rSum+root.val);
-            return rSum+root.val;
-        } else if(rSum<=0 && lSum>=0) {
-            maxi = Math.max(maxi, lSum+root.val);
-            return lSum+root.val;
-        }
-        else {
-             maxi = Math.max(maxi, lSum+rSum+root.val);
-        }
+        //mujhe ans nhi banna upar max value pass karo
+        int temp = Math.max(root.val, Math.max(lSum, rSum) + root.val);
 
-        return Math.max(lSum, rSum) + root.val;
+        //consider mujhko as ans and compare with jo upr pass kiya
+        int ans = Math.max(temp, lSum + rSum + root.val);
+
+        //take max of that
+        maxi= Math.max(maxi, ans);
+
+        return temp;
     }
 }
